@@ -1,0 +1,22 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.pytest_cache/
+
+# Virtual environments
+.venv
+
+# Runtime outputs (チケット・Human Review キュー・処理ログなど。実行時に生成される)
+output/
+
+# Secrets (API keys は環境変数で管理し、コミットしない)
+.env
+.env.*
+!.env.example
+
+# OS files
+.DS_Store
