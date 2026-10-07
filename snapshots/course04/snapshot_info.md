@@ -1,45 +1,56 @@
-# Snapshot Information
+# Source Snapshot — Course 4
 
-Course: 講座4（BUILD）— 問い合わせトリアージAIエージェント（ローカルCLI）
-
-Tag: `course04-v1.0`（注釈つきタグ）
-
-Branch: `course04-build`
-
-Commit: タグ `course04-v1.0` が指すコミット。`git rev-parse course04-v1.0^{commit}` で確認する（このファイルは、そのコミットに含まれるため、ハッシュ自体は、ここに書けない）
-
-Created Date: 2026-09-21
+Tag: `course04-v1.0`
 
 ## Purpose
 
-講座4の完成状態を固定する。Kindle（PoC-Kindle）、Udemy 講座4 の教材制作と、講座5 の実装の開始点（Course 4 Completed Source Snapshot）は、最新のコードではなく、このタグの状態を基準にする。
+このTagは、本書で扱う問い合わせトリアージAIエージェントの **Course 4完成時点** を、読者向けに固定したSource Snapshotです。
 
-## Included Directories
+本書のBUILD工程で扱う、SDDからSource Code・Testへ変換した完成状態を確認するときは、このTagを参照してください。
 
-手順書 §11.3 の基本対象に、依存の版を再現するための `uv.lock` を加える。
+## Included Content
+
+主な公開対象は次のとおりです。
 
 ```text
-README_JA.md
-CLAUDE.md
-pyproject.toml
-uv.lock
-src/
-tests/
-specs/
 config/
 data/
+specs/triage-agent/
+src/triage_agent/
+tests/
+.env.example
+.python-version
+pyproject.toml
+uv.lock
+README.md
+```
+
+- `specs/triage-agent/`：Requirements / Design / Tasks
+- `src/triage_agent/`：実装ソース
+- `tests/`：自動テスト
+- `config/`：設定・マスタ
+- `data/`：サンプル入力・評価データ
+- `pyproject.toml` / `uv.lock`：Python環境と依存関係
+
+## How to Use the Snapshot
+
+現在の読者向け最新版は `main` です。
+
+本書で扱った固定Snapshotを確認する場合は、リポジトリをcloneしたあとに次を実行します。
+
+```bash
+git fetch --tags
+git switch --detach course04-v1.0
+```
+
+元の最新版へ戻る場合：
+
+```bash
+git switch main
 ```
 
 ## Notes
 
-- **状態（タグの時点）：** SDD の仕様は v1.18（レビュー：GO 18/18）。全 23 タスクが完了。`uv run pytest` は 1063 件が通る（LLM・ネットワークなし）。`uv run mypy src` は、問題なし。実 LLM のスモークテスト（`-m llm`、8 件）と、README_JA.md の手順を、実際の API Key で確認済み。
-- **取り出し方（基準のソースを、別のディレクトリへ取り出す）：**
+このPublicリポジトリは読者向けです。制作原稿、編集・レビュー記録、内部プロンプトなどの制作資料は含みません。
 
-  ```bash
-  mkdir -p <出力先>
-  git archive course04-v1.0 README_JA.md CLAUDE.md pyproject.toml uv.lock src tests specs config data | tar -x -C <出力先>
-  ```
-
-  作業ツリーを変えずに確認するだけなら、`git show course04-v1.0:<パス>` も使える。
-- **修正が必要になったとき：** 基準のソース（`src/`・`tests/`・`specs/`）を、教材の都合で直接書き換えない。実装のブランチで修正 → テスト → commit → タグの更新 → このファイルの更新（Snapshot の再生成）→ 教材の修正、の順で行う（手順書 §27）。
-- **次の段階：** 講座5 は、`course04-build` から作るブランチ `course05-validate` で実装する（タグ `course05-v1.0`）。
+外部API、LLM、Pythonパッケージ等は時間とともに変更される可能性があります。本書の記述と照合するときは、`course04-v1.0` のSource Snapshotを基準にしてください。
