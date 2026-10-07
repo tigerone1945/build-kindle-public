@@ -1,0 +1,28 @@
+# カテゴリ・部署のマスタ。カテゴリは、コード上の6種を過不足なく含むこと。
+# description は LLM への分類指示に使う。department が null のカテゴリは、担当部署へ振り分けない。
+
+categories:
+  sales:
+    label: 営業
+    department: 営業
+    description: 導入・見積・契約前の相談、製品の購入検討
+  support:
+    label: サポート
+    department: サポート
+    description: 使い方・操作方法・一般的な質問
+  billing:
+    label: 請求
+    department: 請求
+    description: 請求書・支払い・料金の確認
+  technical:
+    label: 技術
+    department: 技術
+    description: 不具合・エラー・障害・連携などの技術的な問題
+  complaint:
+    label: クレーム対応
+    department: クレーム対応
+    description: 強い不満・苦情・対応への抗議
+  unclassified:
+    label: 未分類
+    department: null
+    description: 分類の根拠となる情報が著しく不足している
