@@ -1,0 +1,22 @@
+# 動作の設定（閾値・リトライ・タイムアウト・モデル・出力先・トレース）。
+# 値を変えたら、アプリケーションを再起動すると反映される。コードの変更は不要。
+
+llm:
+  # 分類に使う OpenAI のモデル名。openai-agents 0.22.3 の既定モデル（Q-01 でユーザー確認済み）。
+  model: gpt-5.6-luna
+  timeout_seconds: 10        # LLM 呼び出し1回あたりのタイムアウト（秒）
+  max_retries: 2             # 初回を含め最大3回
+  retry_backoff_seconds: 1.0 # 1回目の待ち（秒）。以降は2倍
+
+decision:
+  confidence_threshold: 0.7  # 確信度がこの値以上なら自動登録の対象（未満は Human Review）
+
+guardrail:
+  min_body_length: 5         # 本文（空白を除く）の最小文字数
+
+paths:
+  output_dir: output         # チケット・Human Review キュー・処理ログなどの出力先
+
+tracing:
+  enabled: true
+  include_sensitive_data: false  # true にすると、問い合わせ本文などがトレースに含まれる
