@@ -1,0 +1,46 @@
+[project]
+name = "triage-agent"
+version = "0.1.0"
+description = "問い合わせトリアージAIエージェント（Python / OpenAI Agents SDK）"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "openai>=3.16.2",
+    "openai-agents>=0.22.3",
+    "pydantic>=2.13.5",
+    "pyyaml>=6.0.3",
+]
+
+[project.scripts]
+triage-agent = "triage_agent.cli:main"
+
+[dependency-groups]
+dev = [
+    "mypy>=2.3.1",
+    "pytest>=9.1.1",
+    "types-pyyaml>=6.0.12.20260906",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/triage_agent"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# 実LLMを呼ぶテスト（llm マーカー）は、既定では実行しない。
+# 実行するときは、`uv run --env-file .env pytest -m llm`（コマンドラインの -m が優先される）。
+addopts = "-m 'not llm'"
+markers = [
+    "llm: 実際のLLM API（OpenAI）を呼ぶテスト。API利用料がかかる。",
+]
+
+[tool.mypy]
+# NFR-006（型ヒントを全ての関数に付ける）を機械的に検証する。対象は src/ のみ（ADR-011）。
+python_version = "3.13"
+files = ["src"]
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+plugins = ["pydantic.mypy"]
